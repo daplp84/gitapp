@@ -6,8 +6,8 @@ async function getLast() {
     return movements;
 }
 
-async function getIncomes() {
-    const resp = await fetch(`${BASE_URL}/movements?type=income`);
+async function getMovementsByType(type) {
+    const resp = await fetch(`${BASE_URL}/movements?type=` + type);
     const { movements } = await resp.json();
     return movements;
 }
@@ -48,5 +48,5 @@ export default {
     update,
     remove,
     getLast,
-    getIncomes,
+    getMovementsByType,
 };
