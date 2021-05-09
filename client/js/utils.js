@@ -44,5 +44,5 @@ export function getMonth(dateString) {
 }
 
 export function formatDate(date) {
-    return date.split('T')[0];
+    return new Date(date).toLocaleString();
 }
