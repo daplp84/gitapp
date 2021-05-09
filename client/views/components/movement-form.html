@@ -83,4 +83,17 @@
         </div>
         {% endif %}
     </div>
+
+    {% if message.name == 'SuccessMessage' %}
+	<div class="notification is-info is-light">
+		El movimiento fue guardado exitosamente!
+	</div>
+	{% endif %}
+	
+	{% if message.name == 'ErrorMessage' %}
+	<div class="notification is-danger is-light">
+		No ha sido posible guardar el movimiento. Reintente.
+	</div>
+	{% endif %}
+
 </form>
