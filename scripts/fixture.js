@@ -9,6 +9,7 @@ const init = () => {
                 date: '01/01/2021',
                 amount: 1000.0,
                 category: 'Supermercado',
+                description: 'Test 1',
             })
         )
         .then(() =>
@@ -16,6 +17,7 @@ const init = () => {
                 date: '04/01/2021',
                 amount: 587.5,
                 category: 'Librería',
+                description: 'Test 2',
             })
         )
         .then(() =>
@@ -24,6 +26,7 @@ const init = () => {
                 amount: 50000.0,
                 type: MovementType.INCOME,
                 category: 'Sueldo',
+                description: 'Test 3',
             })
         )
         .then(() =>
