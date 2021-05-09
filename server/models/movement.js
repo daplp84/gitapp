@@ -32,7 +32,7 @@ const Movement = db.define(
         },
         description: {
             type: Sequelize.STRING,
-            allowNull: true,
+            allowNull: false,
         },
     },
     { tableName: 'Movement' }
