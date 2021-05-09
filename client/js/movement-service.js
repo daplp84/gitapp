@@ -20,8 +20,8 @@ async function update(movement) {
         },
         body: JSON.stringify(movement),
     });
-
-    return resp.ok;
+    const movObj = await resp.json();
+    return movObj;
 }
 
 async function create(movement) {
@@ -32,8 +32,8 @@ async function create(movement) {
         },
         body: JSON.stringify(movement),
     });
-
-    return resp.ok;
+    const movObj = await resp.json();
+    return movObj;
 }
 
 async function remove(movement) {
