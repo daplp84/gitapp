@@ -21,7 +21,7 @@ async function update(movement) {
         body: JSON.stringify(movement),
     });
 
-    return resp.json();
+    return resp.ok;
 }
 
 async function create(movement) {
@@ -33,7 +33,7 @@ async function create(movement) {
         body: JSON.stringify(movement),
     });
 
-    return resp.json();
+    return resp.ok;
 }
 
 async function remove(movement) {

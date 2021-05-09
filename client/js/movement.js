@@ -5,7 +5,8 @@ let state = {
     movements: [],
     movement: {},
     hasEdit: true,
-    type: ''
+    type: '',
+    message: ''
     
 };
 
@@ -13,6 +14,12 @@ const typeEnum = {
     INCOME: {value: 0, name: "income"}, 
     EXPENSE: {value: 1, name: "expense"}
 };
+
+const msgTypeEnum = {
+    NOMESSAGE: {value: 0, name: "NoMessage"},
+    SUCCESSMESAGGE: {value: 1, name: "SuccessMessage"},
+    ERRORMESSAGE: {value: 2, name: "ErrorMessage"}
+}
 
 let refs = getRefs(document.body);
 
@@ -58,6 +65,7 @@ function getMovementData() {
  * Agrega un movimiento a edicion
  **/
 window.editMovement = function (movement) {
+    state.message = msgTypeEnum.NOMESSAGE;
     state.movement = movement;
     render('movement-form.html', state, refs.form);
 };
@@ -86,12 +94,18 @@ window.onSave = async function (e) {
     e.stopPropagation();
     e.preventDefault();
     const movement = getMovementData();
+    let res = false;
     if (movement.id) {
-        await movementService.update(movement);
+        res = await movementService.update(movement);
     } else {
-        await movementService.create(movement);
+        res = await movementService.create(movement);
     }
-    state.movement = {};
+    if(res){
+        state.message = msgTypeEnum.SUCCESSMESAGGE;
+        state.movement = {};
+    }else{
+        state.message = msgTypeEnum.ERRORMESSAGE;
+    }
     render('movement-form.html', state, refs.form);
 };
 
