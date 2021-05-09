@@ -5,9 +5,9 @@ let state = {
     movements: [],
     movement: {},
     hasEdit: true,
-    type: '',
-    message: ''
-    
+    renderType: '',
+    message: '',
+    type: ''
 };
 
 const typeEnum = {
@@ -27,14 +27,24 @@ let refs = getRefs(document.body);
  * Obtiene todos los ultimos movimientos disponibles
  **/
 async function getMovements() {
-    return movementService.getMovementsByType(state.movement.type);
+    return movementService.getMovementsByType(state.type);
 }
 
 /**
  * Renderiza los movimientos
  **/
 function renderMovements() {
-    render('movement-list.html', state, state.type);
+    render('movement-list.html', state, state.renderType);
+}
+
+function refreshMovements(mov){
+    const index = state.movements.findIndex(element => element.id == mov.id);
+    if(index > -1){
+        state.movements[index] = mov;
+    }else{
+        state.movements.push(mov);
+    }
+    renderMovements();
 }
 
 /**
@@ -42,11 +52,11 @@ function renderMovements() {
  **/
 async function init() {
     if(refs.incomes != null){
-        state.type = refs.incomes;
-        state.movement.type = typeEnum.INCOME.name;
+        state.renderType = refs.incomes;
+        state.type = typeEnum.INCOME.name;
     }else{
-        state.type = refs.expenses;
-        state.movement.type = typeEnum.EXPENSE.name;
+        state.renderType = refs.expenses;
+        state.type = typeEnum.EXPENSE.name;
     }
     state.movements = await getMovements();
     renderMovements();
@@ -55,7 +65,7 @@ async function init() {
 function getMovementData() {
     const formData = new FormData(refs.form.firstElementChild);
     const movement = Object.fromEntries(formData);
-    movement.type = state.movement.type;
+    movement.type = state.type;
     return movement;
 }
 
@@ -94,13 +104,14 @@ window.onSave = async function (e) {
     e.stopPropagation();
     e.preventDefault();
     const movement = getMovementData();
-    let res = false;
+    let res = {};
     if (movement.id) {
         res = await movementService.update(movement);
     } else {
         res = await movementService.create(movement);
     }
-    if(res){
+    if(res.id > 0){
+        refreshMovements(res);
         state.message = msgTypeEnum.SUCCESSMESAGGE;
         state.movement = {};
     }else{
