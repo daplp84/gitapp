@@ -92,8 +92,10 @@ window.onCancel = function () {
  * Elimina un movimiento
  **/
 window.onRemove = async function () {
-    await movementService.update(state.movement);
-    state.movement = {};
+    state.movement = getMovementData();
+    //await movementService.update(state.movement); no deberìa estar vinculada a "remove" de movement-service ???
+    await movementService.remove(state.movement);
+    
     render('movement-form.html', state, refs.form);
 };
 
