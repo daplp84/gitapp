@@ -92,7 +92,8 @@ window.onCancel = function () {
  * Elimina un movimiento
  **/
 window.onRemove = async function () {
-    await movementService.update(state.movement);
+    state.movement = getMovementData();
+    await movementService.remove(state.movement);
     state.movement = {};
     render('movement-form.html', state, refs.form);
 };
