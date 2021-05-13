@@ -7,6 +7,7 @@ function init({ express, viewsPath }) {
     });
 
     env.addFilter('formatDate', date => date);
+    env.addFilter('listDate', date => date);
 
     return env;
 }
