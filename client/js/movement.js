@@ -47,6 +47,7 @@ function refreshMovements(mov){
     renderMovements();
 }
 
+
 /**
  * Inicializa la vista
  **/
@@ -91,10 +92,18 @@ window.onCancel = function () {
 /**
  * Elimina un movimiento
  **/
-window.onRemove = async function () {
+window.onRemove = async function (e) {
+    e.stopPropagation();
+    e.preventDefault();
     state.movement = getMovementData();
-    await movementService.remove(state.movement);
-    state.movement = {};
+    const resp = await movementService.remove(state.movement);
+    if(resp.id > 0){
+        state.movements = await getMovements();
+        renderMovements();
+        state.movement = {};
+    }else{
+        state.message = msgTypeEnum.ERRORMESSAGE;
+    }
     render('movement-form.html', state, refs.form);
 };
 
