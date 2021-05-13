@@ -1,7 +1,7 @@
 export function monefy(num) {
     if (!num) return '';
-
-    const numStr = String(num);
+    const decimals = String(num).indexOf(".") > -1 ? "," + String(num).slice(String(num).indexOf(".") + 1) : "" ;
+    const numStr = String(num).indexOf(".") > -1 ? String(num).slice(0, String(num).indexOf(".")) : String(num);
     const points = numStr.length / 3;
     const result = [];
 
@@ -13,7 +13,7 @@ export function monefy(num) {
         result.push(chunk);
     }
 
-    return result.reverse().join('.');
+    return result.reverse().join('.') + decimals;
 }
 
 export function getRandomColor() {
