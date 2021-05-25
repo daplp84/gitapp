@@ -21,7 +21,7 @@ test('Deberia renderizar correctamente un movimiento del tipo income', () => {
     expect(getByText($movement, '$')).toHaveClass('has-text-success');
 });
 
-test('Los gráficos deberían utilizar las clases correspondientes', () => {
+test('Las cards de los gráficos deberían utilizar las clases correspondientes', () => {
     const $home = render('home');
     expect(getByText($home, 'Gastos mensuales')).toHaveClass('card-header-title');
     expect(getByText($home, 'Gastos mensuales').parentElement).toHaveClass('card-header');
