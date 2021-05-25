@@ -4,7 +4,7 @@ const { getByText, getByTestId } = require('@testing-library/dom');
 require('@testing-library/jest-dom');
 
 test('Deberia renderizar correctamente un movimiento del tipo income', () => {
-    const $movement = render('movement', {
+    const $movement = render('components/movement', {
         movement: {
             type: 'income',
             date: '01/01/2021',
@@ -19,4 +19,12 @@ test('Deberia renderizar correctamente un movimiento del tipo income', () => {
         expect.stringContaining('income')
     );
     expect(getByText($movement, '$')).toHaveClass('has-text-success');
+});
+
+test('Los gráficos deberían utilizar las clases correspondientes', () => {
+    const $home = render('home');
+    expect(getByText($home, 'Gastos mensuales')).toHaveClass('card-header-title');
+    expect(getByText($home, 'Gastos mensuales').parentElement).toHaveClass('card-header');
+    expect(getByText($home, 'Balance mensual')).toHaveClass('card-header-title');
+    expect(getByText($home, 'Balance mensual').parentElement).toHaveClass('card-header');
 });
