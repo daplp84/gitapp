@@ -24,7 +24,6 @@ describe('Ingresos Test', () => {
         cy.get('input[name=category]').type('Bono');
         cy.get('input[name=amount]').type('100000');
         cy.contains('Guardar').click();
-        cy.reload();
 
         cy.get('[data-testid=movement]').should('have.length', 5);
     });
