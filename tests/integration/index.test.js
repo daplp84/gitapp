@@ -6,7 +6,7 @@ const fetch = require('node-fetch');
 
 let server, baseURL;
 
-beforeAll(async () => {
+beforeAll(async() => {
     server = await start();
     baseURL = `http://localhost:${server.address().port}/api/v1`;
 });
@@ -15,11 +15,37 @@ afterAll(() => {
     server.close();
 });
 
-beforeEach(async () => {
+beforeEach(async() => {
     await MovementModel.Movement.sync({ force: true });
 });
 
-test('Se debería iniciar la aplicación sin movimientos', async () => {
+//prueba ----------------------------------------
+
+test('Correcto funcionamiento de borrar movimiento', async() => {
+
+    const movementData = {
+        id: '3',
+        date: '04/01/2021',
+        amount: 50000.0,
+        type: MovementType.INCOME,
+        category: 'Sueldo',
+    };
+
+    // Se crea el movimiento
+    await MovementModel.create(movementData);
+
+    // Se elimina el movimiento
+    await MovementModel.delete(movementData);
+
+    const URL = `${baseURL}/movements`;
+    const req = await fetch(URL);
+    //const body = await req;
+
+    expect(req.status).toBe(200);
+
+});
+
+test('Se debería iniciar la aplicación sin movimientos', async() => {
     const URL = `${baseURL}/movements`;
     const req = await fetch(URL);
     const body = await req.json();
@@ -28,7 +54,7 @@ test('Se debería iniciar la aplicación sin movimientos', async () => {
     expect(body.movements.length).toBe(0);
 });
 
-test('Obtener movimientos por api', async () => {
+test('Obtener movimientos por api', async() => {
     const movementData = {
         date: '04/01/2021',
         amount: 50000.0,
@@ -47,7 +73,7 @@ test('Obtener movimientos por api', async () => {
     expect(body.movements.length).toBe(1);
 });
 
-test('Buscar movimientos por api con un resultado', async () => {
+test('Buscar movimientos por api con un resultado', async() => {
     const firstMovementData = {
         date: '01/01/2021',
         amount: 1000.0,
@@ -74,7 +100,7 @@ test('Buscar movimientos por api con un resultado', async () => {
     expect(firstMovement.id).toBe(body.movements[0].id);
 });
 
-test('Buscar movimientos por api con offset', async () => {
+test('Buscar movimientos por api con offset', async() => {
     const firstMovementData = {
         date: '01/01/2021',
         amount: 1000.0,
@@ -100,7 +126,7 @@ test('Buscar movimientos por api con offset', async () => {
     expect(secondMovement.id).toBe(response.movements[0].id);
 });
 
-test('Buscar movimientos por api filtrando por tipo income', async () => {
+test('Buscar movimientos por api filtrando por tipo income', async() => {
     const firstMovementData = {
         date: '01/01/2021',
         amount: 1000.0,
@@ -126,7 +152,7 @@ test('Buscar movimientos por api filtrando por tipo income', async () => {
     expect(secondMovement.id).toBe(response.movements[0].id);
 });
 
-test('Buscar movimientos por api filtrando por tipo expense', async () => {
+test('Buscar movimientos por api filtrando por tipo expense', async() => {
     const firstMovementData = {
         date: '01/01/2021',
         amount: 1000.0,
@@ -152,7 +178,7 @@ test('Buscar movimientos por api filtrando por tipo expense', async () => {
     expect(firstMovement.id).toBe(response.movements[0].id);
 });
 
-test('Buscar movimientos por api filtrando por tipo inexistente', async () => {
+test('Buscar movimientos por api filtrando por tipo inexistente', async() => {
     const firstMovementData = {
         date: '01/01/2021',
         amount: 1000.0,
@@ -177,7 +203,7 @@ test('Buscar movimientos por api filtrando por tipo inexistente', async () => {
     expect(response.movements.length).toBe(0);
 });
 
-test('Buscar movimientos por api con más de un resultado', async () => {
+test('Buscar movimientos por api con más de un resultado', async() => {
     const firstMovementData = {
         date: '01/01/2021',
         amount: 1000.0,
@@ -203,7 +229,7 @@ test('Buscar movimientos por api con más de un resultado', async () => {
     expect(body.movements.length).toBe(2);
 });
 
-test('Crear movimiento por api', async () => {
+test('Crear movimiento por api', async() => {
     const movementData = {
         date: '04/01/2021',
         amount: 50000.0,
@@ -228,7 +254,7 @@ test('Crear movimiento por api', async () => {
     expect(movements.rows[0].category).toBe(movementData.category);
 });
 
-test('Editar movimiento por api', async () => {
+test('Editar movimiento por api', async() => {
     const movementData = {
         date: '04/01/2021',
         amount: 50000.0,
@@ -266,7 +292,10 @@ test('Editar movimiento por api', async () => {
     expect(movements.rows[0].category).toBe(updateData.category);
 });
 
-test('Editar movimiento inexistente por api', async () => {
+
+
+
+test('Editar movimiento inexistente por api', async() => {
     const movementData = {
         date: '04/01/2021',
         amount: 50000.0,
