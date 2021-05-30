@@ -1,11 +1,29 @@
 const MovementModel = require('../../server/models/movement.js');
 const MovementType = require('../../server/models/movementType.js');
 
-beforeEach(async () => {
+beforeEach(async() => {
     await MovementModel.Movement.sync({ force: true });
 });
 
-test('Crear movimiento', async () => {
+//--- Testear que se tome la fecha enviada en la creación de un movimiento.
+test('Verifica fecha al crear movimiento', async() => {
+    const movementData = {
+
+        date: new Date(2021, 5, 15),
+        amount: 50000.0,
+        type: MovementType.INCOME,
+        category: 'Sueldo',
+    };
+
+    // Se crea el movimiento
+    const movement = await MovementModel.create(movementData);
+
+    expect(movement.date).toBe(movementData.date);
+
+});
+
+
+test('Crear movimiento', async() => {
     const movementData = {
         date: '04/01/2021',
         amount: 50000.0,
@@ -21,7 +39,7 @@ test('Crear movimiento', async () => {
     expect(movement.category).toBe(movementData.category);
 });
 
-test('Crear movimiento sin tipo', async () => {
+test('Crear movimiento sin tipo', async() => {
     const movementData = {
         date: '01/01/2021',
         amount: 1000.0,
@@ -36,7 +54,7 @@ test('Crear movimiento sin tipo', async () => {
     expect(movement.category).toBe(movementData.category);
 });
 
-test('Crear movimiento sin fecha', async () => {
+test('Crear movimiento sin fecha', async() => {
     const movementData = {
         amount: 1000.0,
         category: 'Supermercado',
@@ -49,14 +67,14 @@ test('Crear movimiento sin fecha', async () => {
     }
 });
 
-test('Listar movimientos sin resultados', async () => {
+test('Listar movimientos sin resultados', async() => {
     const movements = await MovementModel.getAll();
 
     expect(movements).not.toBeNull();
     expect(movements.rows.length).toBe(0);
 });
 
-test('Listar movimientos con resultados', async () => {
+test('Listar movimientos con resultados', async() => {
     const movementData = {
         date: '04/01/2021',
         amount: 50000.0,
@@ -73,7 +91,7 @@ test('Listar movimientos con resultados', async () => {
     expect(movements.rows.length).toBe(1);
 });
 
-test('Listar movimientos con limite', async () => {
+test('Listar movimientos con limite', async() => {
     const firstMovementData = {
         date: '04/01/2021',
         amount: 50000.0,
@@ -98,7 +116,7 @@ test('Listar movimientos con limite', async () => {
     expect(movements.rows[0].id).toBe(movement.id);
 });
 
-test('Listar movimientos con limite y offset', async () => {
+test('Listar movimientos con limite y offset', async() => {
     const firstMovementData = {
         date: '04/01/2021',
         amount: 50000.0,
@@ -124,7 +142,7 @@ test('Listar movimientos con limite y offset', async () => {
     expect(movements.rows[0].id).toBe(movement.id);
 });
 
-test('Filtrar movimientos por tipo income', async () => {
+test('Filtrar movimientos por tipo income', async() => {
     const firstMovementData = {
         date: '04/01/2021',
         amount: 50000.0,
@@ -149,7 +167,7 @@ test('Filtrar movimientos por tipo income', async () => {
     expect(movements.rows[0].id).toBe(movement.id);
 });
 
-test('Filtrar movimientos por tipo expense', async () => {
+test('Filtrar movimientos por tipo expense', async() => {
     const firstMovementData = {
         date: '04/01/2021',
         amount: 50000.0,
@@ -178,7 +196,7 @@ test('Filtrar movimientos por tipo expense', async () => {
     expect(movements.rows[0].id).toBe(movement.id);
 });
 
-test('Filtrar movimientos por tipo inexistente', async () => {
+test('Filtrar movimientos por tipo inexistente', async() => {
     const firstMovementData = {
         date: '04/01/2021',
         amount: 50000.0,
@@ -202,7 +220,7 @@ test('Filtrar movimientos por tipo inexistente', async () => {
     expect(movements.rows.length).toBe(0);
 });
 
-test('Editar movimiento', async () => {
+test('Editar movimiento', async() => {
     const movementData = {
         date: '04/01/2021',
         amount: 50000.0,
@@ -230,7 +248,7 @@ test('Editar movimiento', async () => {
     expect(movementUpdated.category).toBe('Otros');
 });
 
-test('Editar movimiento inexistente', async () => {
+test('Editar movimiento inexistente', async() => {
     const movementData = {
         date: '04/01/2021',
         amount: 50000.0,
@@ -260,7 +278,7 @@ test('Editar movimiento inexistente', async () => {
     expect(movements.rows[0].category).toBe(movementData.category);
 });
 
-test('Eliminar movimiento', async () => {
+test('Eliminar movimiento', async() => {
     const movementData = {
         date: '04/01/2021',
         amount: 50000.0,
@@ -289,7 +307,7 @@ test('Eliminar movimiento', async () => {
     expect(movements.rows.length).toBe(0);
 });
 
-test('Eliminar movimiento inexistente', async () => {
+test('Eliminar movimiento inexistente', async() => {
     const movementData = {
         date: '04/01/2021',
         amount: 50000.0,
