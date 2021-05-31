@@ -19,12 +19,10 @@ beforeEach(async() => {
     await MovementModel.Movement.sync({ force: true });
 });
 
-//prueba ----------------------------------------
 
-test('Correcto funcionamiento de borrar movimiento', async() => {
+test('Correcto funcionamiento de borrar movimiento por API', async() => {
 
     const movementData = {
-        id: '3',
         date: '04/01/2021',
         amount: 50000.0,
         type: MovementType.INCOME,
@@ -32,14 +30,15 @@ test('Correcto funcionamiento de borrar movimiento', async() => {
     };
 
     // Se crea el movimiento
-    await MovementModel.create(movementData);
+    const movement = await MovementModel.create(movementData);
 
-    // Se elimina el movimiento
-    await MovementModel.delete(movementData);
+    const URL = `${baseURL}/movements/${movement.id}`;
 
-    const URL = `${baseURL}/movements`;
-    const req = await fetch(URL);
-    //const body = await req;
+    const req = await fetch(URL, {
+        method: 'DELETE',
+
+    });
+
 
     expect(req.status).toBe(200);
 
