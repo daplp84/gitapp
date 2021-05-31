@@ -15,6 +15,18 @@ describe('Egresos Test', () => {
         cy.get('[data-testid=movement]').should('have.length', 6);
     });
 
+    it('Deberia aparecer la alerta luego de crear un egreso', () => {
+        cy.visit('/expense');
+
+        cy.get('input[name=date]').type('2021-05-29');
+        cy.get('input[name=category]').type('Prueba');
+        cy.get('input[name=amount]').type('3500');
+        cy.contains('Guardar').click();
+
+        cy.get('[data-testid=save-alert]').should('be.visible');
+    });
+
+
     it('Deberia aparecer y funcionar correctamente la tabla de egresos', () => {
         cy.visit('/expense');
         cy.title().should('eq', 'Gitapp - Egresos');
@@ -27,4 +39,5 @@ describe('Egresos Test', () => {
             .should('contain', 'expense');
         });
     });
+
 });
