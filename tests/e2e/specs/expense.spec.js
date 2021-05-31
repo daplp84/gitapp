@@ -24,7 +24,7 @@ describe('Egresos Test', () => {
         cy.get('input[name=amount]').type('300');
         cy.contains('Guardar').click();
 
-        cy.get('[data-testid=movement]').should('have.length', 5);
+        cy.get('[data-testid=movement]').should('have.length', 6);
     });
 
 
