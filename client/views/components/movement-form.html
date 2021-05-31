@@ -89,13 +89,13 @@
     </div>
 
     {% if message.name == 'SuccessMessage' %}
-	<div class="notification is-info is-light">
+	<div class="notification is-info is-light" data-testid="save-alert">
 		El movimiento fue guardado exitosamente!
 	</div>
 	{% endif %}
 	
 	{% if message.name == 'ErrorMessage' %}
-	<div class="notification is-danger is-light">
+	<div class="notification is-danger is-light" data-testid="save-alert">
 		No ha sido posible guardar los cambios. Reintente.
 	</div>
 	{% endif %}

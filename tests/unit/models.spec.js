@@ -39,7 +39,21 @@ test('Crear movimiento', async() => {
     expect(movement.category).toBe(movementData.category);
 });
 
-test('Crear movimiento sin tipo', async() => {
+test('Crear movimiento con descripcion', async () => {
+    const movementData = {
+        description: 'Lapiceras',
+        date: '29/05/2021',
+        amount: 150.0,
+        category: 'Libreria',
+    };
+
+    // Crea el movimiento
+    const movement = await MovementModel.create(movementData);
+    // Se espera obtener que la descripcion creada sea igual a la ingresada.
+    expect(movement.description).toBe(movementData.description);
+});
+
+test('Crear movimiento sin tipo', async () => {
     const movementData = {
         date: '01/01/2021',
         amount: 1000.0,

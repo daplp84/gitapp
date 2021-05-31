@@ -27,4 +27,15 @@ describe('Ingresos Test', () => {
 
         cy.get('[data-testid=movement]').should('have.length', 5);
     });
+
+    it('Deberia aparecer la alerta luego de crear un ingreso', () => {
+        cy.visit('/income');
+
+        cy.get('input[name=date]').type('2021-05-28');
+        cy.get('input[name=category]').type('Prueba ingreso');
+        cy.get('input[name=amount]').type('150000');
+        cy.contains('Guardar').click();
+
+        cy.get('[data-testid=save-alert]').should('be.visible');
+    });
 });
