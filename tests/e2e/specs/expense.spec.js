@@ -37,6 +37,7 @@ describe('Egresos Test', () => {
             .click();
 
         cy.get('input[name=description]');
+    });
 
     it('Deberia aparecer la alerta luego de crear un egreso', () => {
         cy.visit('/expense');
