@@ -5,8 +5,7 @@ const viewsPath = path.resolve(
     __dirname,
     '..',
     'client',
-    'views',
-    'components'
+    'views'
 );
 
 const env = init({ viewsPath });
