@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2021-06-16
+
+### Added
+
+-   Alerta que indique que un movimiento se guardó con éxito al crear el movimiento.
+
+-   Endpoint en la API para permitir borrar un movimiento. Conectar con la función ya realizada del modelo.
+
+-   Campo description al modelo.
+
+-   Validación de HTML5 en el form de crear movimiento.
+
+-   Crea vista de egresos de manera análoga a la tabla de ingresos.
+
+### Fixed
+
+-   Arregla los headers de la card de los gráficos. Tienen que usar la clase card-header y card-header-title.
+
+-   Arregla el problema que hace que todos los movimientos se creen con la fecha de hoy, permitiendo tomar la fecha que se envía desde el form.
+
+-   Arregla el formato de los montos en las tablas. Si le pasan un número con “,” rompe el formato.
+  
+-   Arregla el formato de las fechas en las tablas para que sea más amigable.
+    
+-   Al crear un movimiento, hace refresh para que aparezca reflejado en la lista. Se arregla esto haciendo que el cambio impacte inmediatamente en la lista.
+
+
 ## [1.0.1] - 2021-05-03
 
 ### Added
@@ -30,6 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Home UI with charts and last movements
 -   Incomes UI with last incomes
 
-[unreleased]: https://github.com/frlp-utn-ingsoft/gitapp/compare/v1.0.1...HEAD
-[1.0.1]: https://github.com/frlp-utn-ingsoft/gitapp/releases/tag/v1.0.1
-[1.0.0]: https://github.com/frlp-utn-ingsoft/gitapp/releases/tag/v1.0.0
+[unreleased]: https://github.com/daplp84/gitapp/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/daplp84/gitapp/releases/tag/v1.1.0
+[1.0.1]: https://github.com/daplp84/gitapp/releases/tag/v1.0.1
+[1.0.0]: https://github.com/daplp84/gitapp/releases/tag/v1.0.0
