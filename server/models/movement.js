@@ -42,7 +42,7 @@ const Movement = db.define(
  * Obtener todos los movimientos de la base de datos.
  *
  */
-const getAllMovements = (limit, skip, type) => {
+const getAllMovements = (limit, skip, type, sort) => {
     let where = {};
 
     if (type) {
@@ -52,7 +52,17 @@ const getAllMovements = (limit, skip, type) => {
         };
     }
 
+    let sortClause = [['id']];
+    if(sort){
+        if(sort.includes(":"))
+            sortClause = [[sort.slice(0, sort.indexOf(":")) , sort.slice(sort.indexOf(":") + 1).toUpperCase()]];
+        else
+            sortClause = [[sort]];
+        
+    }
+
     return Movement.findAndCountAll({
+        order: sortClause, 
         limit: limit,
         offset: skip,
         attributes: {

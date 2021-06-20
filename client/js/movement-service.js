@@ -1,13 +1,13 @@
 const BASE_URL = '/api/v1';
 
 async function getLast() {
-    const resp = await fetch(`${BASE_URL}/movements`);
+    const resp = await fetch(`${BASE_URL}/movements?sort=date:DESC`);
     const { movements } = await resp.json();
     return movements;
 }
 
 async function getMovementsByType(type) {
-    const resp = await fetch(`${BASE_URL}/movements?type=` + type);
+    const resp = await fetch(`${BASE_URL}/movements?type=` + type + `&sort=date:DESC`);
     const { movements } = await resp.json();
     return movements;
 }

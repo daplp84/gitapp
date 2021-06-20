@@ -156,6 +156,32 @@ test('Listar movimientos con limite y offset', async() => {
     expect(movements.rows[0].id).toBe(movement.id);
 });
 
+test('Listar movimientos ordenando por fecha descendente', async() => {
+    const firstMovementData = {
+        date: new Date(2021, 1, 3),
+        amount: 50000.0,
+        type: MovementType.INCOME,
+        category: 'Sueldo',
+    };
+
+    const secondMovementData = {
+        date: new Date(2021, 5, 24),
+        amount: 50000.0,
+        type: MovementType.EXPENSE,
+        category: 'Sueldo',
+    };
+
+    // Creamos los movimientos
+    await MovementModel.create(firstMovementData);
+    await MovementModel.create(secondMovementData);
+
+    let movements = await MovementModel.getAll(null, null, null, 'date:desc');
+
+    // La lista de movimientos debería empezar con los datos de secondMovementData (fecha mayor)
+    expect(movements.rows.length).toBe(2);
+    expect(movements.rows[0].date).toStrictEqual(secondMovementData.date);
+});
+
 test('Filtrar movimientos por tipo income', async() => {
     const firstMovementData = {
         date: '04/01/2021',
