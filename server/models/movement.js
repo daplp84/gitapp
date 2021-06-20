@@ -76,9 +76,10 @@ const createMovement = ({
     type = MovementType.EXPENSE,
     category = '',
     description = '',
+    recurrente = false,
 } = {}) => {
     //date = new Date()
-    return Movement.create({ date, amount, type, category, description });
+    return Movement.create({ date, amount, type, category, description, recurrente });
 };
 
 /**
@@ -94,11 +95,12 @@ const updateMovement = (
         type = MovementType.EXPENSE,
         category = '',
         description = '',
+        recurrente = false,
     } = {}
 ) => {
     return Movement.findOne({ where: { id: id } }).then((movement) => {
         if (movement != null) {
-            return movement.update({ date, amount, type, category, description });
+            return movement.update({ date, amount, type, category, description, recurrente });
         }
         return null;
     });

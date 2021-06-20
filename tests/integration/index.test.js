@@ -202,11 +202,11 @@ test('Buscar movimientos por api filtrando por tipo inexistente', async() => {
     expect(response.movements.length).toBe(0);
 });
 
-// ------------- test para ver que modelo devuelve algo con campo "recurrente"
+// ------------- test para saber que en el modelo un movimiento es "recurrente"
 
-test('Buscar movimientos por api filtrando por campo booleano -recurrente-', async() => {
+test('Verifica que existe el campo booleano en el modelo para saber si el movimiento es recurrente', async() => {
 
-    const firstMovementData = {
+    const MovementData = {
         date: '04/01/2021',
         amount: 50000.0,
         type: MovementType.INCOME,
@@ -214,17 +214,26 @@ test('Buscar movimientos por api filtrando por campo booleano -recurrente-', asy
         recurrente: true,
     };
 
-    // Creamos los movimientos
-    await MovementModel.create(firstMovementData);
+    const movement = await MovementModel.create(MovementData);
 
-    const URL = `${baseURL}/movements?recurrente=true`;
+    expect(movement.recurrente).toBe(MovementData.recurrente);
+
+
+
+    /*
+    // Creamos los movimientos
+    //await MovementModel.create(MovementData);
+    const movement = await MovementModel.create(MovementData);
+    //const URL = `${baseURL}/movements?recurrente=true`;
+    const URL = `${baseURL}/movements`;
     const req = await fetch(URL);
     const response = await req.json();
 
-    expect(response.movements.length).toBe(1);
+    //expect(response.movements.length).toBe(1);
+    //expect(response.recurrente).toBe(true);
+    expect(response.recurrente).toBe(MovementData.recurrente);
+    */
 });
-//--------------
-
 
 test('Buscar movimientos por api con más de un resultado', async() => {
     const firstMovementData = {
