@@ -202,6 +202,33 @@ test('Buscar movimientos por api filtrando por tipo inexistente', async() => {
     expect(response.movements.length).toBe(0);
 });
 
+test('Buscar movimientos por api ordenando por fecha descendente', async() => {
+    const firstMovementData = {
+        date: new Date(2021, 2, 15),
+        amount: 1000.0,
+        category: 'Supermercado',
+    };
+
+    const secondMovementData = {
+        date: new Date(2021, 6, 19),
+        amount: 50000.0,
+        type: MovementType.INCOME,
+        category: 'Sueldo',
+    };
+
+    // Creamos los movimientos
+    await MovementModel.create(firstMovementData);
+    await MovementModel.create(secondMovementData);
+
+    const URL = `${baseURL}/movements?sort=date:DESC`;
+    const req = await fetch(URL);
+    const response = await req.json();
+
+    expect(response.movements.length).toBe(2);
+    expect(new Date(response.movements[0].date)).toStrictEqual(secondMovementData.date);
+});
+
+
 test('Buscar movimientos por api con más de un resultado', async() => {
     const firstMovementData = {
         date: '01/01/2021',
