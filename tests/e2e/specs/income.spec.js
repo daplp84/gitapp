@@ -55,4 +55,11 @@ describe('Ingresos Test', () => {
            
         });
     });
+
+    it('Deberia aparecer el signo + delante de cada ingreso', () => {
+        cy.visit('/income');
+        cy.get('[data-testid=movement-amount]').each( (item) => {
+            cy.wrap(item).invoke('text').should('contain', '+');
+        });
+    });
 });

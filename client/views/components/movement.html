@@ -21,6 +21,11 @@
 
     <div class="level-right">
         <div class="level-item">
+            <p  data-testid="movement-amount"
+                class="{{ 'has-text-success' if movement.type == 'income' else 'has-text-danger' }} is-size-3"
+            >
+                {{ '+' if movement.type == 'income' else '-' }}
+            </p>
             <p
                 class="{{ 'has-text-success' if movement.type == 'income' else 'has-text-danger' }} is-size-3"
             >

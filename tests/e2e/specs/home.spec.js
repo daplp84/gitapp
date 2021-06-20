@@ -42,4 +42,17 @@ describe('Home Test', () => {
            
         });
     });
+
+    it('Deberia aparecer el signo correspondiente delante de cada movimiento', () => {
+        cy.visit('/');
+        cy.get('[data-testid=movement]').each( (item) => {
+            cy.wrap(item).get('[data-testid=movement-icon]').invoke('attr', 'src').then((src) => {
+                if(src.includes('expense')){
+                    cy.wrap(item).get('[data-testid=movement-amount]').should('contain', '-');
+                }else{
+                    cy.wrap(item).get('[data-testid=movement-amount]').should('contain', '+');
+                }
+            });
+        });
+    });
 });
