@@ -10,8 +10,7 @@ const MovementType = require('./movementType.js');
  *
  */
 const Movement = db.define(
-    'Movement',
-    {
+    'Movement', {
         // Atributos
         date: {
             type: Sequelize.DATE,
@@ -34,8 +33,12 @@ const Movement = db.define(
             type: Sequelize.STRING,
             allowNull: true,
         },
-    },
-    { tableName: 'Movement' }
+        recurrente: {
+            type: Sequelize.BOOLEAN,
+            allowNull: true,
+        },
+
+    }, { tableName: 'Movement' }
 );
 
 /**
@@ -85,8 +88,7 @@ const createMovement = ({
  *
  */
 const updateMovement = (
-    id,
-    {
+    id, {
         date = '01/01/2021',
         amount = 0.0,
         type = MovementType.EXPENSE,
