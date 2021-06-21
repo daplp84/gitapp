@@ -85,7 +85,7 @@ const createMovement = ({
     description = '',
 } = {}) => {
     //date = new Date()
-    return Movement.create({ date, amount, type, category, description });
+    return (amount < 0) ? null : Movement.create({ date, amount, type, category, description });
 };
 
 /**
@@ -106,7 +106,7 @@ const updateMovement = (
 ) => {
     return Movement.findOne({ where: { id: id } }).then((movement) => {
         if (movement != null) {
-            return movement.update({ date, amount, type, category, description });
+            return (amount < 0) ? null : movement.update({ date, amount, type, category, description });
         }
         return null;
     });

@@ -20,8 +20,8 @@ async function update(movement) {
         },
         body: JSON.stringify(movement),
     });
-    const movObj = await resp.json();
-    return movObj;
+
+    return  (resp.status == 500) ? "Error al crear el movimiento." : await resp.json();
 }
 
 async function create(movement) {
@@ -32,8 +32,8 @@ async function create(movement) {
         },
         body: JSON.stringify(movement),
     });
-    const movObj = await resp.json();
-    return movObj;
+
+    return  (resp.status == 500) ? "Error al crear el movimiento." : await resp.json();
 }
 
 async function remove(movement) {

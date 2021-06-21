@@ -40,7 +40,7 @@ router.get('/', function (req, res) {
 router.post('/', function (req, res) {
     MovementModel.create(req.body)
         .then((data) => {
-            res.status(201).send(data);
+           (data.amount < 0) ? res.status(500).send('Error al crear movimiento') : res.status(201).send(data);
         })
         .catch((_) => {
             console.log(_);
@@ -60,7 +60,9 @@ router.put('/:id', function (req, res) {
                 res.status(404).send(
                     'El movimiento ' + req.params.id + ' no fue encontrado'
                 );
-            } else res.status(200).send(movement);
+            } else {
+                (movement.amount < 0) ? res.status(500).send('Error al actualizar movimiento') : res.status(200).send(movement);
+            }
         })
         .catch(() => res.status(500).send('Error al obtener movimiento'));
 });
