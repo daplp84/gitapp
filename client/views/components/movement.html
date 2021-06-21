@@ -12,7 +12,7 @@
         <div class="level-item">
             <div>
                 <p class="has-text-weight-medium">{{ movement.category }}</p>
-                <p class="has-text-weight-light is-size-7">
+                <p data-testid="movement-date" class="has-text-weight-light is-size-7">
                     {{ movement.date | listDate }}
                 </p>
             </div>
@@ -21,6 +21,11 @@
 
     <div class="level-right">
         <div class="level-item">
+            <p  data-testid="movement-amount"
+                class="{{ 'has-text-success' if movement.type == 'income' else 'has-text-danger' }} is-size-3"
+            >
+                {{ '+' if movement.type == 'income' else '-' }}
+            </p>
             <p
                 class="{{ 'has-text-success' if movement.type == 'income' else 'has-text-danger' }} is-size-3"
             >

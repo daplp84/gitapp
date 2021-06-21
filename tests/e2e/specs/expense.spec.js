@@ -64,4 +64,27 @@ describe('Egresos Test', () => {
         });
     });
 
+    it('Los últimos egresos deberían estar ordenados por fecha descendente', () => {
+        cy.visit('/expense');
+        var lastDate = "";
+        cy.get('[data-testid=movement-date]').each((item, index) => {
+            cy.wrap(item).invoke('text').then((text) => 
+            {
+                var dateParts = text.split('/');
+                var actDate = new Date(parseInt(dateParts[2].slice(0,4)), parseInt(dateParts[1]), parseInt(dateParts[0]));
+                if(index > 0)
+                    cy.wrap(actDate).should('be.lte', lastDate);
+                
+                lastDate = actDate;
+            });
+           
+        });
+    });
+
+    it('Deberia aparecer el signo - delante de cada egreso', () => {
+        cy.visit('/expense');
+        cy.get('[data-testid=movement-amount]').each( (item) => {
+            cy.wrap(item).invoke('text').should('contain', '-');
+        });
+    });
 });

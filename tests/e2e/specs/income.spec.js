@@ -12,9 +12,9 @@ describe('Ingresos Test', () => {
             .contains('editar')
             .click();
 
-        cy.get('input[name=id]').should('have.value', '3');
-        cy.get('input[name=category]').should('have.value', 'Sueldo');
-        cy.get('input[name=amount]').should('have.value', '50000');
+        cy.get('input[name=id]').should('have.value', '14');
+        cy.get('input[name=category]').should('have.value', 'Plazo Fijo');
+        cy.get('input[name=amount]').should('have.value', '11000');
     });
 
     it('Deberia poder crear un nuevo ingreso', () => {
@@ -37,5 +37,29 @@ describe('Ingresos Test', () => {
         cy.contains('Guardar').click();
 
         cy.get('[data-testid=save-alert]').should('be.visible');
+    });
+
+    it('Los últimos ingresos deberían estar ordenados por fecha descendente', () => {
+        cy.visit('/income');
+        var lastDate = "";
+        cy.get('[data-testid=movement-date]').each((item, index) => {
+            cy.wrap(item).invoke('text').then((text) => 
+            {
+                var dateParts = text.split('/');
+                var actDate = new Date(parseInt(dateParts[2].slice(0,4)), parseInt(dateParts[1]), parseInt(dateParts[0]));
+                if(index > 0)
+                    cy.wrap(actDate).should('be.lte', lastDate);
+                
+                lastDate = actDate;
+            });
+           
+        });
+    });
+
+    it('Deberia aparecer el signo + delante de cada ingreso', () => {
+        cy.visit('/income');
+        cy.get('[data-testid=movement-amount]').each( (item) => {
+            cy.wrap(item).invoke('text').should('contain', '+');
+        });
     });
 });

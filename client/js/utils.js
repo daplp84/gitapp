@@ -48,5 +48,5 @@ export function formatDate(date) {
 }
 
 export function listDate(date) {
-    return new Date(date).toLocaleString();
+    return new Date(date).toLocaleString("es-419");
 }

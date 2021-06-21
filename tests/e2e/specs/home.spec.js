@@ -25,4 +25,34 @@ describe('Home Test', () => {
             .title()
             .should('eq', 'Gitapp - Ingresos')
     });
+
+    it('Los últimos movimientos deberían estar ordenados por fecha descendente', () => {
+        cy.visit('/');
+        var lastDate = "";
+        cy.get('[data-testid=movement-date]').each((item, index) => {
+            cy.wrap(item).invoke('text').then((text) => 
+            {
+                var dateParts = text.split('/');
+                var actDate = new Date(parseInt(dateParts[2].slice(0,4)), parseInt(dateParts[1]), parseInt(dateParts[0]));
+                if(index > 0)
+                    cy.wrap(actDate).should('be.lte', lastDate);
+                
+                lastDate = actDate;
+            });
+           
+        });
+    });
+
+    it('Deberia aparecer el signo correspondiente delante de cada movimiento', () => {
+        cy.visit('/');
+        cy.get('[data-testid=movement]').each( (item) => {
+            cy.wrap(item).get('[data-testid=movement-icon]').invoke('attr', 'src').then((src) => {
+                if(src.includes('expense')){
+                    cy.wrap(item).get('[data-testid=movement-amount]').should('contain', '-');
+                }else{
+                    cy.wrap(item).get('[data-testid=movement-amount]').should('contain', '+');
+                }
+            });
+        });
+    });
 });

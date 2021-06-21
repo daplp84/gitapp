@@ -1,13 +1,13 @@
 const BASE_URL = '/api/v1';
 
 async function getLast() {
-    const resp = await fetch(`${BASE_URL}/movements`);
+    const resp = await fetch(`${BASE_URL}/movements?sort=date:DESC`);
     const { movements } = await resp.json();
     return movements;
 }
 
 async function getMovementsByType(type) {
-    const resp = await fetch(`${BASE_URL}/movements?type=` + type);
+    const resp = await fetch(`${BASE_URL}/movements?type=` + type + `&sort=date:DESC`);
     const { movements } = await resp.json();
     return movements;
 }
@@ -20,8 +20,8 @@ async function update(movement) {
         },
         body: JSON.stringify(movement),
     });
-    const movObj = await resp.json();
-    return movObj;
+
+    return  (resp.status == 500) ? "Error al crear el movimiento." : await resp.json();
 }
 
 async function create(movement) {
@@ -32,8 +32,8 @@ async function create(movement) {
         },
         body: JSON.stringify(movement),
     });
-    const movObj = await resp.json();
-    return movObj;
+
+    return  (resp.status == 500) ? "Error al crear el movimiento." : await resp.json();
 }
 
 async function remove(movement) {
