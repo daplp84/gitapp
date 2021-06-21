@@ -82,5 +82,10 @@ describe('Egresos Test', () => {
         });
     });
 
-
+    it('Deberia aparecer el signo - delante de cada egreso', () => {
+        cy.visit('/expense');
+        cy.get('[data-testid=movement-amount]').each( (item) => {
+            cy.wrap(item).invoke('text').should('contain', '-');
+        });
+    });
 });
