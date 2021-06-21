@@ -27,7 +27,6 @@ describe('Egresos Test', () => {
         cy.get('[data-testid=movement]').should('have.length', 6);
     });
 
-
     it('Deberia visualizar el campo descripcion al editar un egreso', () => {
         cy.visit('/expense');
 
@@ -57,11 +56,11 @@ describe('Egresos Test', () => {
         cy.title().should('eq', 'Gitapp - Egresos');
         cy.get('[data-testid=last-movements]').contains('Últimos egresos');
         cy.get('[data-testid=movement]').should('have.length', 5);
-        cy.get('[data-testid=movement]').each( (item) => {
+        cy.get('[data-testid=movement]').each((item) => {
             cy.wrap(item)
-            .get('[data-testid=movement-icon]')
-            .should('have.attr', 'src')
-            .should('contain', 'expense');
+                .get('[data-testid=movement-icon]')
+                .should('have.attr', 'src')
+                .should('contain', 'expense');
         });
     });
 

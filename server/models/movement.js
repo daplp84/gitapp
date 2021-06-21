@@ -10,8 +10,7 @@ const MovementType = require('./movementType.js');
  *
  */
 const Movement = db.define(
-    'Movement',
-    {
+    'Movement', {
         // Atributos
         date: {
             type: Sequelize.DATE,
@@ -34,8 +33,12 @@ const Movement = db.define(
             type: Sequelize.STRING,
             allowNull: true,
         },
-    },
-    { tableName: 'Movement' }
+        recurrente: {
+            type: Sequelize.BOOLEAN,
+            allowNull: true,
+        },
+
+    }, { tableName: 'Movement' }
 );
 
 /**
@@ -83,9 +86,10 @@ const createMovement = ({
     type = MovementType.EXPENSE,
     category = '',
     description = '',
+    recurrente = false,
 } = {}) => {
     //date = new Date()
-    return (amount < 0) ? null : Movement.create({ date, amount, type, category, description });
+    return (amount < 0) ? null : Movement.create({ date, amount, type, category, description, recurrente });
 };
 
 /**
@@ -95,18 +99,18 @@ const createMovement = ({
  *
  */
 const updateMovement = (
-    id,
-    {
+    id, {
         date = '01/01/2021',
         amount = 0.0,
         type = MovementType.EXPENSE,
         category = '',
         description = '',
+        recurrente = false,
     } = {}
 ) => {
     return Movement.findOne({ where: { id: id } }).then((movement) => {
         if (movement != null) {
-            return (amount < 0) ? null : movement.update({ date, amount, type, category, description });
+            return (amount < 0) ? null : movement.update({ date, amount, type, category, description, recurrente });
         }
         return null;
     });
