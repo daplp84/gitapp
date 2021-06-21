@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2021-06-20
+
+### Added
+
+-   Un signo - delante de cada gasto y un signo + delante de cada ingreso de todas las listas.
+
+-   Un campo booleano en el modelo para saber si el movimiento es recurrente.
+
+### Fixed
+
+-   En las listas de movimientos, se muestran los últimos 5 movimientos.
+
+-   En el modelo y en la API, no permiten recibir montos negativos al crear o actualizar un movimiento.
+
 ## [1.1.0] - 2021-06-16
 
 ### Added
@@ -57,7 +71,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Home UI with charts and last movements
 -   Incomes UI with last incomes
 
-[unreleased]: https://github.com/daplp84/gitapp/compare/v1.1.0...HEAD
+[unreleased]: https://github.com/daplp84/gitapp/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/daplp84/gitapp/releases/tag/v1.2.0
 [1.1.0]: https://github.com/daplp84/gitapp/releases/tag/v1.1.0
 [1.0.1]: https://github.com/daplp84/gitapp/releases/tag/v1.0.1
 [1.0.0]: https://github.com/daplp84/gitapp/releases/tag/v1.0.0
