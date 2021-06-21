@@ -5,6 +5,23 @@ beforeEach(async() => {
     await MovementModel.Movement.sync({ force: true });
 });
 
+
+test('Verifica que existe el campo booleano en el modelo para saber si el movimiento es recurrente', async() => {
+
+    const MovementData = {
+        date: '04/01/2021',
+        amount: 50000.0,
+        type: MovementType.INCOME,
+        category: 'Sueldo',
+        recurrente: true,
+    };
+
+    const movement = await MovementModel.create(MovementData);
+
+    expect(movement.recurrente).toBe(MovementData.recurrente);
+});
+
+
 //--- Testear que se tome la fecha enviada en la creación de un movimiento.
 test('Verifica fecha al crear movimiento', async() => {
     const movementData = {
@@ -39,7 +56,7 @@ test('Crear movimiento', async() => {
     expect(movement.category).toBe(movementData.category);
 });
 
-test('Crear movimiento con descripcion', async () => {
+test('Crear movimiento con descripcion', async() => {
     const movementData = {
         description: 'Lapiceras',
         date: '29/05/2021',
@@ -53,7 +70,7 @@ test('Crear movimiento con descripcion', async () => {
     expect(movement.description).toBe(movementData.description);
 });
 
-test('Crear movimiento sin tipo', async () => {
+test('Crear movimiento sin tipo', async() => {
     const movementData = {
         date: '01/01/2021',
         amount: 1000.0,
